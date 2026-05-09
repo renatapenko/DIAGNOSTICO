@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diagnóstico Emocional — Relacionamento Não é Lugar de Adulto na Postura Infantil</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0c0809;
+    --bg2: #161012;
+    --bg3: #1e1518;
+    --rose: #9B2335;
+    --rose-light: #c4445a;
+    --rose-pale: #e8899a;
+    --gold: #C9A96E;
+    --gold-light: #e2c99a;
+    --cream: #F5EDD6;
+    --cream-dim: #c8bfa8;
+    --text: #F0E6CF;
+    --text-dim: #a09080;
+    --border: rgba(201,169,110,0.15);
+    --shadow: rgba(0,0,0,0.6);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    min-height: 100%;
+    min-height: -webkit-fill-available;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Nunito', sans-serif;
+    font-weight: 400;
+    line-height: 1.7;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(155,35,53,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 60% 40% at 100% 100%, rgba(201,169,110,0.06) 0%, transparent 60%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  #app {
+    position: relative;
+    z-index: 1;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 48px 20px 60px;
+    padding-bottom: max(60px, env(safe-area-inset-bottom, 60px));
+    padding-left: max(20px, env(safe-area-inset-left, 20px));
+    padding-right: max(20px, env(safe-area-inset-right, 20px));
+  }
+
+  .screen {
+    display: none;
+    width: 100%;
+    max-width: 680px;
+    animation: fadeUp 0.6s ease both;
+  }
+  .screen.active { display: block; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* WELCOME */
+  .welcome-label {
+    font-family: 'Nunito', sans-serif;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .welcome-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 6vw, 44px);
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--cream);
+    margin-bottom: 14px;
+  }
+
+  .welcome-title em {
+    font-style: italic;
+    color: var(--rose-pale);
+  }
+
+  .welcome-subtitle {
+    font-size: clamp(15px, 2.5vw, 17px);
+    color: var(--cream-dim);
+    margin-bottom: 32px;
+    line-height: 1.8;
+  }
+
+  .divider {
+    width: 48px;
+    height: 1px;
+    background: var(--gold);
+    margin: 24px 0;
+    opacity: 0.5;
+  }
+
+  .welcome-text {
+    font-size: clamp(14px, 2vw, 15px);
+    color: var(--text-dim);
+    line-height: 1.9;
+    margin-bottom: 16px;
+  }
+
+  .welcome-text strong {
+    color: var(--cream);
+    font-weight: 600;
+  }
+
+  .warning-box {
+    background: rgba(155,35,53,0.12);
+    border: 1px solid rgba(155,35,53,0.25);
+    border-radius: 10px;
+    padding: 18px 20px;
+    margin: 24px 0 36px;
+    font-size: clamp(13px, 2vw, 14px);
+    color: var(--rose-pale);
+    line-height: 1.85;
+  }
+
+  /* BUTTONS */
+  .btn-primary {
+    display: block;
+    width: 100%;
+    background: linear-gradient(135deg, var(--rose) 0%, #7a1a2a 100%);
+    color: var(--cream);
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(14px, 2vw, 15px);
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    padding: 20px 24px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    text-transform: uppercase;
+    box-shadow: 0 4px 24px rgba(155,35,53,0.35);
+    text-align: center;
+    touch-action: manipulation;
+    user-select: none;
+  }
+  .btn-primary:active {
+    transform: scale(0.98);
+    box-shadow: 0 2px 12px rgba(155,35,53,0.4);
+  }
+  @media (min-width: 600px) {
+    .btn-primary {
+      display: inline-block;
+      width: auto;
+      padding: 18px 52px;
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(155,35,53,0.5);
+      background: linear-gradient(135deg, var(--rose-light) 0%, var(--rose) 100%);
+    }
+  }
+
+  /* PROGRESS */
+  .progress-bar-wrap {
+    width: 100%;
+    height: 3px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 3px;
+    margin-bottom: 32px;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rose) 0%, var(--gold) 100%);
+    border-radius: 3px;
+    transition: width 0.4s ease;
+  }
+  .progress-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    gap: 8px;
+  }
+  .progress-count {
+    font-size: 11px;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .block-label {
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    text-align: right;
+    line-height: 1.4;
+  }
+
+  /* QUESTION CARD */
+  .question-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 28px 24px 26px;
+    margin-bottom: 20px;
+    position: relative;
+    overflow: hidden;
+  }
+  .question-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--rose), transparent);
+    opacity: 0.4;
+  }
+  @media (min-width: 600px) {
+    .question-card { padding: 40px 40px 36px; }
+  }
+
+  .question-number {
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 3px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    display: block;
+  }
+
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(17px, 3.5vw, 22px);
+    font-weight: 400;
+    line-height: 1.55;
+    color: var(--cream);
+  }
+
+  /* ANSWER BUTTONS */
+  .answer-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 6px;
+  }
+
+  .answer-btn {
+    background: var(--bg3);
+    border: 1px solid rgba(255,255,255,0.07);
+    border-radius: 10px;
+    color: var(--text-dim);
+    font-family: 'Nunito', sans-serif;
+    font-size: clamp(14px, 2vw, 15px);
+    font-weight: 700;
+    padding: 22px 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    letter-spacing: 0.3px;
+    touch-action: manipulation;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    min-height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .answer-btn:active {
+    transform: scale(0.96);
+  }
+  @media (min-width: 600px) {
+    .answer-btn:hover {
+      border-color: var(--rose-pale);
+      color: var(--cream);
+      background: rgba(155,35,53,0.12);
+      transform: translateY(-1px);
+    }
+    .answer-btn.sim:hover { border-color: #c4445a; background: rgba(196,68,90,0.15); }
+    .answer-btn.as-vezes:hover { border-color: var(--gold); background: rgba(201,169,110,0.1); color: var(--gold-light); }
+    .answer-btn.nao:hover { border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.04); }
+  }
+
+  .answer-btn.selected {
+    border-color: var(--gold);
+    color: var(--gold-light);
+    background: rgba(201,169,110,0.14);
+    transform: scale(1.02);
+  }
+  .answer-btn.sim.selected {
+    border-color: var(--rose-light);
+    color: var(--rose-pale);
+    background: rgba(155,35,53,0.22);
+  }
+
+  /* CALCULATING */
+  .calc-wrap {
+    text-align: center;
+    padding: 80px 20px;
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .calc-pulse {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--rose);
+    margin: 0 auto 36px;
+    animation: pulse 1.5s ease-in-out infinite;
+    box-shadow: 0 0 0 0 rgba(155,35,53,0.4);
+  }
+  @keyframes pulse {
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(155,35,53,0.4); }
+    70% { transform: scale(1); box-shadow: 0 0 0 20px rgba(155,35,53,0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(155,35,53,0); }
+  }
+  .calc-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(20px, 4vw, 26px);
+    color: var(--cream);
+    margin-bottom: 12px;
+  }
+  .calc-text {
+    font-size: clamp(13px, 2vw, 14px);
+    color: var(--text-dim);
+    line-height: 1.85;
+  }
+
+  /* RESULT */
+  .result-header {
+    text-align: center;
+    padding: 16px 0 28px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 32px;
+  }
+  .result-tag {
+    display: inline-block;
+    background: rgba(155,35,53,0.2);
+    border: 1px solid rgba(155,35,53,0.4);
+    border-radius: 30px;
+    padding: 6px 18px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--rose-pale);
+    font-weight: 700;
+    margin-bottom: 20px;
+  }
+  .result-profile-name {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(24px, 5vw, 38px);
+    font-weight: 700;
+    color: var(--cream);
+    line-height: 1.2;
+    margin-bottom: 14px;
+  }
+  .result-profile-headline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(15px, 2.5vw, 19px);
+    color: var(--rose-pale);
+    line-height: 1.55;
+  }
+
+  .result-section { margin-bottom: 32px; }
+  .result-section-title {
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 14px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .result-text {
+    font-size: clamp(14px, 2vw, 15px);
+    color: var(--text-dim);
+    line-height: 1.95;
+    margin-bottom: 14px;
+  }
+  .result-text strong { color: var(--cream); font-weight: 600; }
+  .result-text em { color: var(--rose-pale); font-style: italic; }
+
+  .traits-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin: 14px 0;
+  }
+  @media (min-width: 480px) {
+    .traits-grid { grid-template-columns: 1fr 1fr; }
+  }
+  .trait-item {
+    background: var(--bg3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 13px 16px;
+    font-size: clamp(12px, 1.8vw, 13px);
+    color: var(--cream-dim);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .trait-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--rose-pale);
+    flex-shrink: 0;
+  }
+
+  .score-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin: 20px 0;
+  }
+  .score-bar-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: clamp(11px, 1.8vw, 12px);
+    color: var(--text-dim);
+    margin-bottom: 7px;
+    font-weight: 600;
+  }
+  .score-bar-track {
+    height: 5px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .score-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1.2s ease;
+  }
+
+  .call-box {
+    background: linear-gradient(135deg, rgba(155,35,53,0.15) 0%, rgba(201,169,110,0.08) 100%);
+    border: 1px solid rgba(155,35,53,0.3);
+    border-radius: 14px;
+    padding: 28px 22px;
+    text-align: center;
+    margin-top: 40px;
+  }
+  @media (min-width: 600px) {
+    .call-box { padding: 36px 32px; }
+  }
+  .call-box-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(17px, 3vw, 23px);
+    color: var(--cream);
+    margin-bottom: 12px;
+    line-height: 1.4;
+  }
+  .call-box-text {
+    font-size: clamp(13px, 2vw, 14px);
+    color: var(--text-dim);
+    line-height: 1.9;
+    margin-bottom: 24px;
+  }
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- SCREEN: WELCOME -->
+  <div class="screen active" id="screen-welcome">
+    <span class="welcome-label">Diagnóstico Emocional</span>
+    <h1 class="welcome-title">Relacionamento Não é Lugar de <em>Adulto na Postura Infantil</em></h1>
+    <p class="welcome-subtitle">Um diagnóstico que vai te mostrar o que você talvez nunca tenha conseguido enxergar sozinha.</p>
+    <div class="divider"></div>
+    <p class="welcome-text">Você já tentou entender por que sofre tanto dentro do relacionamento. Já tentou mudar. Já tentou conversar. Já tentou calar. E mesmo assim a dor continua.</p>
+    <p class="welcome-text"><strong>O problema pode não ser o que você faz. Pode ser de onde você está se posicionando emocionalmente.</strong></p>
+    <p class="welcome-text">Esse diagnóstico foi criado para te mostrar exatamente isso: o padrão emocional que você carrega sem perceber — e que continua criando sofrimento, independente da pessoa que esteja ao seu lado.</p>
+    <div class="warning-box">
+      <strong>Antes de começar:</strong> Esse processo é honesto e direto. Algumas perguntas vão te desconfortar. Responda com o que é verdade, não com o que você gostaria que fosse. <br><br>
+      São <strong>120 perguntas</strong> organizadas em 10 blocos. Responda cada uma pensando em como você realmente age, não como gostaria de agir.
+    </div>
+    <button class="btn-primary" onclick="startDiagnostic()">Começar diagnóstico</button>
+  </div>
+
+  <!-- SCREEN: QUESTIONS -->
+  <div class="screen" id="screen-questions">
+    <div class="progress-info">
+      <span class="block-label" id="block-label">Bloco 1</span>
+      <span class="progress-count" id="progress-count">1 / 120</span>
+    </div>
+    <div class="progress-bar-wrap">
+      <div class="progress-bar-fill" id="progress-fill" style="width: 0%"></div>
+    </div>
+    <div class="question-card">
+      <span class="question-number" id="question-number">PERGUNTA 01</span>
+      <p class="question-text" id="question-text"></p>
+    </div>
+    <div class="answer-grid">
+      <button class="answer-btn sim" onclick="answer(2)">Sim</button>
+      <button class="answer-btn as-vezes" onclick="answer(1)">Às vezes</button>
+      <button class="answer-btn nao" onclick="answer(0)">Não</button>
+    </div>
+  </div>
+
+  <!-- SCREEN: CALCULATING -->
+  <div class="screen" id="screen-calculating">
+    <div class="calc-wrap">
+      <div class="calc-pulse"></div>
+      <h2 class="calc-title">Analisando seu padrão emocional...</h2>
+      <p class="calc-text">Estamos organizando suas respostas<br>e identificando sua posição emocional no relacionamento.</p>
+    </div>
+  </div>
+
+  <!-- SCREEN: RESULT -->
+  <div class="screen" id="screen-result">
+    <div class="result-header">
+      <div class="result-tag">Seu Diagnóstico Emocional</div>
+      <h2 class="result-profile-name" id="result-name"></h2>
+      <p class="result-profile-headline" id="result-headline"></p>
+    </div>
+
+    <div class="score-bars" id="score-bars"></div>
+
+    <div class="result-section">
+      <p class="result-section-title">Quem você é dentro do relacionamento</p>
+      <div id="result-description"></div>
+    </div>
+
+    <div class="result-section">
+      <p class="result-section-title">O que isso está criando na sua vida</p>
+      <div id="result-impact"></div>
+    </div>
+
+    <div class="result-section">
+      <p class="result-section-title">Suas marcas emocionais</p>
+      <div class="traits-grid" id="result-traits"></div>
+    </div>
+
+    <div class="result-section">
+      <p class="result-section-title">A verdade que precisa ser dita</p>
+      <div id="result-truth"></div>
+    </div>
+
+    <div class="call-box">
+      <h3 class="call-box-title" id="cta-title"></h3>
+      <p class="call-box-text" id="cta-text"></p>
+      <button class="btn-primary" id="cta-btn">Quero sair desse lugar</button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const questions = [
+  // BLOCO 1 — EXPECTATIVA INVISÍVEL
+  { block: 1, blockName: "Expectativa Invisível", text: "Você espera que ele perceba o que você precisa... sem que você precise falar?" },
+  { block: 1, blockName: "Expectativa Invisível", text: "Quando ele não faz algo que você queria, você sente uma decepção que ele nem sabe que causou?" },
+  { block: 1, blockName: "Expectativa Invisível", text: "Você já pensou \"se me amasse de verdade, saberia\" — e ficou quieta?" },
+  { block: 1, blockName: "Expectativa Invisível", text: "Você se machuca com coisas que nunca foram combinadas entre vocês?" },
+  { block: 1, blockName: "Expectativa Invisível", text: "Você espera ser prioridade... mas raramente consegue dizer isso de forma clara?" },
+  { block: 1, blockName: "Expectativa Invisível", text: "Você já testou ele para ver se ele perceberia o que você precisava?" },
+  { block: 1, blockName: "Expectativa Invisível", text: "Quando ele some ou se afasta, você interpreta automaticamente como falta de amor?" },
+  { block: 1, blockName: "Expectativa Invisível", text: "Você já ficou magoada com algo que nunca chegou a ser dito entre vocês?" },
+  { block: 1, blockName: "Expectativa Invisível", text: "Você evita explicar o que sente porque acha que deveria ser óbvio?" },
+  { block: 1, blockName: "Expectativa Invisível", text: "Você espera que ele adivinhe o que você quer — e fica ressentida quando ele não adivinha?" },
+  { block: 1, blockName: "Expectativa Invisível", text: "Você fica irritada por não ser compreendida... mas não se explica?" },
+  { block: 1, blockName: "Expectativa Invisível", text: "Você já culpou ele por não corresponder a algo que você nunca chegou a pedir?" },
+
+  // BLOCO 2 — REATIVIDADE EMOCIONAL
+  { block: 2, blockName: "Reatividade Emocional", text: "Você reage... e só depois percebe que foi longe demais?" },
+  { block: 2, blockName: "Reatividade Emocional", text: "Você fala no impulso e depois se arrepende das palavras?" },
+  { block: 2, blockName: "Reatividade Emocional", text: "Coisas pequenas te tiram do chão com uma intensidade que você mesma não entende?" },
+  { block: 2, blockName: "Reatividade Emocional", text: "Você responde antes de entender o que realmente aconteceu?" },
+  { block: 2, blockName: "Reatividade Emocional", text: "Você ou explode... ou fecha completamente. Raramente existe um meio-termo?" },
+  { block: 2, blockName: "Reatividade Emocional", text: "Você diz coisas que não representam o que sente de verdade?" },
+  { block: 2, blockName: "Reatividade Emocional", text: "Você sente que perde o controle emocional em momentos que não queria?" },
+  { block: 2, blockName: "Reatividade Emocional", text: "Depois de reagir, você tenta consertar — mas o estrago já foi feito?" },
+  { block: 2, blockName: "Reatividade Emocional", text: "Você reage mais pela emoção do que pelo que realmente aconteceu?" },
+  { block: 2, blockName: "Reatividade Emocional", text: "Você sabe que deveria pausar antes de responder, mas não consegue?" },
+  { block: 2, blockName: "Reatividade Emocional", text: "Você sente que em certos momentos \"vira outra pessoa\" dentro do relacionamento?" },
+  { block: 2, blockName: "Reatividade Emocional", text: "Você já olhou para o que fez e pensou \"não era isso que eu queria fazer\"?" },
+
+  // BLOCO 3 — PASSADO ATIVO
+  { block: 3, blockName: "Passado Ativo", text: "Você reage ao presente como se estivesse revivendo algo que já aconteceu antes?" },
+  { block: 3, blockName: "Passado Ativo", text: "Situações do dia a dia ativam emoções que parecem maiores do que a situação pede?" },
+  { block: 3, blockName: "Passado Ativo", text: "Você desconfia mesmo quando não tem nenhum motivo real para isso?" },
+  { block: 3, blockName: "Passado Ativo", text: "Você já puniu alguém de hoje por algo que outra pessoa fez antes?" },
+  { block: 3, blockName: "Passado Ativo", text: "Você espera que vai dar errado antes mesmo de acontecer?" },
+  { block: 3, blockName: "Passado Ativo", text: "Você revive mentalmente situações antigas com uma frequência que te cansa?" },
+  { block: 3, blockName: "Passado Ativo", text: "Você mistura o que está acontecendo agora com o que já aconteceu antes?" },
+  { block: 3, blockName: "Passado Ativo", text: "Você reage mais à memória do que ao fato que está diante de você?" },
+  { block: 3, blockName: "Passado Ativo", text: "Você já se pegou brigando por algo que não era sobre o presente?" },
+  { block: 3, blockName: "Passado Ativo", text: "Você se protege emocionalmente mesmo quando não existe ameaça real?" },
+  { block: 3, blockName: "Passado Ativo", text: "Você sente que o passado ainda tem uma força muito grande sobre você?" },
+  { block: 3, blockName: "Passado Ativo", text: "A intensidade das suas reações às vezes surpreende até você mesma?" },
+
+  // BLOCO 4 — CONTROLE
+  { block: 4, blockName: "Controle", text: "Você tenta, de alguma forma, controlar o comportamento dele?" },
+  { block: 4, blockName: "Controle", text: "Você fica irritada quando as coisas não saem do jeito que você organizou?" },
+  { block: 4, blockName: "Controle", text: "Você precisa saber como vai ser para conseguir relaxar?" },
+  { block: 4, blockName: "Controle", text: "Você tende a conduzir as situações para evitar que saiam do controle?" },
+  { block: 4, blockName: "Controle", text: "Quando você não controla, sente um desconforto que é difícil de ignorar?" },
+  { block: 4, blockName: "Controle", text: "Você controla porque acredita, no fundo, que sem você algo vai sair errado?" },
+  { block: 4, blockName: "Controle", text: "Você precisa de confirmações constantes para se sentir segura dentro da relação?" },
+  { block: 4, blockName: "Controle", text: "Imprevistos te desestabilizam mais do que deveriam?" },
+  { block: 4, blockName: "Controle", text: "Você controla para evitar conflitos — como se o controle fosse a única forma de manter a paz?" },
+  { block: 4, blockName: "Controle", text: "No fundo, você acredita que se não controlar, vai sofrer?" },
+  { block: 4, blockName: "Controle", text: "Você sente ansiedade quando não sabe o que vai acontecer?" },
+  { block: 4, blockName: "Controle", text: "Você se cansa de carregar esse peso — mas não sabe como largar?" },
+
+  // BLOCO 5 — SOBRECARGA
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você sente que carrega o relacionamento sozinha?" },
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você faz coisas que não quer fazer só para evitar conflito ou desconforto?" },
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você se apaga emocionalmente para manter a paz?" },
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você assume responsabilidades que não deveriam ser só suas?" },
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você continua dando mesmo quando está emocionalmente esgotada?" },
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você sente que se parar, tudo desmorona?" },
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você evita pedir ajuda mesmo quando está no limite?" },
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você dá muito mais do que recebe — e sabe disso, mas continua dando?" },
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você sempre se coloca por último — e isso já não parece mais uma escolha?" },
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você sente que não pode relaxar de verdade dentro da relação?" },
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você acredita, no fundo, que amar exige se sacrificar?" },
+  { block: 5, blockName: "Sobrecarga Relacional", text: "Você espera que alguém reconheça tudo o que você carrega... mas ninguém parece ver?" },
+
+  // BLOCO 6 — SILÊNCIO EMOCIONAL
+  { block: 6, blockName: "Silêncio Emocional", text: "Você guarda o que sente em vez de falar?" },
+  { block: 6, blockName: "Silêncio Emocional", text: "Você engole situações que te incomodam para não criar problema?" },
+  { block: 6, blockName: "Silêncio Emocional", text: "Você acumula... acumula... até não aguentar mais?" },
+  { block: 6, blockName: "Silêncio Emocional", text: "Você fica em silêncio esperando que ele perceba e mude por conta própria?" },
+  { block: 6, blockName: "Silêncio Emocional", text: "Você guarda situações — como se estivesse juntando provas para um dia apresentar?" },
+  { block: 6, blockName: "Silêncio Emocional", text: "Você espera o momento certo para falar — e ele nunca chega?" },
+  { block: 6, blockName: "Silêncio Emocional", text: "Você fica quieta por fora, mas por dentro continua sentindo tudo?" },
+  { block: 6, blockName: "Silêncio Emocional", text: "Você sente que nunca diz tudo o que precisa dizer?" },
+  { block: 6, blockName: "Silêncio Emocional", text: "Você usa o silêncio como uma forma de se proteger — ou de punir?" },
+  { block: 6, blockName: "Silêncio Emocional", text: "Você some emocionalmente sem explicar o motivo — e espera ser notada?" },
+  { block: 6, blockName: "Silêncio Emocional", text: "Você engole mais do que deveria — e isso está te pesando de formas que você mal consegue nomear?" },
+  { block: 6, blockName: "Silêncio Emocional", text: "Quando você finalmente fala, já passou do ponto — e sai de um jeito que você não queria?" },
+
+  // BLOCO 7 — CULPA E AUTOJULGAMENTO
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "Você se culpa mesmo sem ter certeza de que fez algo errado?" },
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "Você acha que exagera no que sente — como se suas emoções fossem grandes demais?" },
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "Você se arrepende de sentir o que sente?" },
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "Você se julga por não conseguir agir melhor — mesmo quando está no limite?" },
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "Você sente que deveria ser diferente do que é — mais calma, mais paciente, mais forte?" },
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "Você se vê como difícil de lidar?" },
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "Você minimiza suas próprias dores como se elas não merecessem espaço?" },
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "Você se coloca como o problema da relação?" },
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "Você pede desculpas mesmo sem saber exatamente pelo que está se desculpando?" },
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "Você sente que erra mais do que acerta — dentro e fora do relacionamento?" },
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "Você se cobra para controlar suas emoções o tempo todo — como se sentir fosse um problema?" },
+  { block: 7, blockName: "Culpa e Autojulgamento", text: "No fundo, você nunca se sente suficiente?" },
+
+  // BLOCO 8 — ACUSAÇÃO E PROJEÇÃO
+  { block: 8, blockName: "Acusação e Projeção", text: "Quando algo dói, seu primeiro movimento é culpá-lo?" },
+  { block: 8, blockName: "Acusação e Projeção", text: "Você assume intenção ruim da parte dele sem confirmar se é verdade?" },
+  { block: 8, blockName: "Acusação e Projeção", text: "Você interpreta o que imagina como se fosse o que de fato aconteceu?" },
+  { block: 8, blockName: "Acusação e Projeção", text: "Você já julgou antes de ouvir a versão completa?" },
+  { block: 8, blockName: "Acusação e Projeção", text: "Você usa \"sempre\" ou \"nunca\" quando está machucada — mesmo sabendo que não é bem assim?" },
+  { block: 8, blockName: "Acusação e Projeção", text: "Você se defende atacando?" },
+  { block: 8, blockName: "Acusação e Projeção", text: "Quando tem um conflito, você foca mais no erro dele do que no seu?" },
+  { block: 8, blockName: "Acusação e Projeção", text: "Você evita olhar para a sua parte no que está acontecendo?" },
+  { block: 8, blockName: "Acusação e Projeção", text: "Você acusa para não precisar se sentir vulnerável?" },
+  { block: 8, blockName: "Acusação e Projeção", text: "É mais fácil ver o que é dele do que enxergar o que é seu?" },
+  { block: 8, blockName: "Acusação e Projeção", text: "Você reage ao que acha que aconteceu... antes de confirmar se é isso mesmo?" },
+  { block: 8, blockName: "Acusação e Projeção", text: "Você tira conclusões rápidas — e age em cima delas como se fossem certeza?" },
+
+  // BLOCO 9 — DEPENDÊNCIA EMOCIONAL
+  { block: 9, blockName: "Dependência Emocional", text: "Seu estado emocional depende diretamente de como ele está com você?" },
+  { block: 9, blockName: "Dependência Emocional", text: "Você precisa de uma resposta dele para conseguir se acalmar?" },
+  { block: 9, blockName: "Dependência Emocional", text: "Quando ele se afasta, você imediatamente assume que fez algo errado?" },
+  { block: 9, blockName: "Dependência Emocional", text: "Você fica analisando o que aconteceu — tentando entender onde errou — mesmo sem ter certeza de que errou?" },
+  { block: 9, blockName: "Dependência Emocional", text: "Você precisa de confirmações constantes de que está tudo bem entre vocês?" },
+  { block: 9, blockName: "Dependência Emocional", text: "Quando a conexão some, você sente um vazio que é difícil de descrever — quase físico?" },
+  { block: 9, blockName: "Dependência Emocional", text: "Você muda quem você é para não ser rejeitada?" },
+  { block: 9, blockName: "Dependência Emocional", text: "Você evita conflitos com medo de perder o relacionamento?" },
+  { block: 9, blockName: "Dependência Emocional", text: "Você precisa de provas constantes de que ele ainda te ama?" },
+  { block: 9, blockName: "Dependência Emocional", text: "Você gasta energia demais tentando entender o que ele pensa, sente ou quer dizer?" },
+  { block: 9, blockName: "Dependência Emocional", text: "Seu bem-estar emocional depende do humor e das atitudes dele?" },
+  { block: 9, blockName: "Dependência Emocional", text: "Você só consegue ficar verdadeiramente bem quando ele está bem com você?" },
+
+  // BLOCO 10 — IDENTIDADE RELACIONAL
+  { block: 10, blockName: "Identidade Relacional", text: "Você sente que se perde dentro do relacionamento — como se ele fosse maior que você?" },
+  { block: 10, blockName: "Identidade Relacional", text: "Você deixou de ser quem você era para manter a relação?" },
+  { block: 10, blockName: "Identidade Relacional", text: "Você se molda para ser aceita — e vai perdendo pedaços de si mesma no caminho?" },
+  { block: 10, blockName: "Identidade Relacional", text: "Você precisa da validação dele para se sentir segura de si mesma?" },
+  { block: 10, blockName: "Identidade Relacional", text: "Você sente que precisa dele para se sentir inteira?" },
+  { block: 10, blockName: "Identidade Relacional", text: "Você se abandona emocionalmente para não perder o vínculo?" },
+  { block: 10, blockName: "Identidade Relacional", text: "No fundo, você nunca se sente suficiente — independente do que ele faça ou diga?" },
+  { block: 10, blockName: "Identidade Relacional", text: "Mesmo acompanhada, existe um vazio que você não sabe nomear?" },
+  { block: 10, blockName: "Identidade Relacional", text: "Você não sabe mais ao certo quem você é fora desse relacionamento?" },
+  { block: 10, blockName: "Identidade Relacional", text: "Ficar sozinha te assusta de um jeito que você não consegue controlar?" },
+  { block: 10, blockName: "Identidade Relacional", text: "Você vive tão em função do relacionamento que se perdeu no meio disso?" },
+  { block: 10, blockName: "Identidade Relacional", text: "Mesmo sem demonstrar para ninguém — estar nesse relacionamento dói?" }
+];
+
+const profiles = {
+  reativa: {
+    name: "Reativa Emocional",
+    headline: "Você protege com tudo que tem. E essa proteção está te destruindo por dentro.",
+    description: [
+      "Você não é difícil. Você é <strong>uma mulher que aprendeu, muito cedo, que ficar exposta era perigoso.</strong> Então o seu sistema nervoso criou uma solução: reagir primeiro. Atacar antes de ser atacada. Fechar antes de ser ferida.",
+      "O problema é que esse mecanismo foi criado para um perigo antigo. E agora ele está funcionando no relacionamento errado, na hora errada, com uma pessoa que talvez não mereça o peso da sua história.",
+      "A explosão, a intensidade, as palavras que você se arrepende — <em>não são falhas de caráter.</em> São armadura. São o jeito que você encontrou de sobreviver emocionalmente. Só que armadura não deixa ninguém chegar. E amor não cresce onde o corpo sente que precisa se defender o tempo todo.",
+      "Você reage antes de entender. Age antes de processar. E depois passa dias tentando reparar o que a sua própria proteção construiu. Não porque você é fraca. Mas porque ninguém te ensinou que havia outra forma de estar no mundo emocional."
+    ],
+    impact: [
+      "O ciclo não para. Você reage, se arrepende, tenta reparar, e na próxima vez o ciclo começa de novo — com mais culpa acumulada.",
+      "Você afasta quem tenta se aproximar. Não por mal. Por <strong>medo disfaçado de intensidade.</strong>",
+      "Você carrega culpa crônica pelas reações — e essa culpa alimenta a próxima reação. É um ciclo que se retroalimenta.",
+      "O relacionamento se torna um campo minado. Para você. Para ele. Para os dois."
+    ],
+    traits: [
+      "Reatividade antes da compreensão",
+      "Arrependimento depois da explosão",
+      "Intensidade emocional que surpreende",
+      "Defesa que parece ataque",
+      "Ciclos de reação e reparação",
+      "Confusão entre passado e presente"
+    ],
+    truth: [
+      "A verdade que ninguém te disse: <strong>você não vai sair desse ciclo tentando ter mais controle.</strong> Controle não é o que falta. O que falta é segurança emocional interna. É aprender que você pode sentir sem explodir, que pode ser vulnerável sem ser destruída.",
+      "O que está acontecendo com você tem um nome, uma origem e — o mais importante — <em>tem saída.</em> Não através de força de vontade. Mas através de reposicionamento emocional real.",
+      "Você merece parar de se arrepender de quem você é quando está em sofrimento."
+    ],
+    cta_title: "Essa não precisa ser sua história para sempre.",
+    cta_text: "Você chegou até aqui porque algo em você sabe que existe outra forma de estar dentro de um relacionamento. O próximo passo é entender de onde essa reatividade vem — e como começar a sair dela de verdade.",
+    barColor: "#c4445a"
+  },
+  controladora: {
+    name: "Controladora Silenciosa",
+    headline: "Você aprendeu que contar com alguém era arriscado. Então passou a controlar tudo.",
+    description: [
+      "Você não faz cenas. Você não explode. Por fora, você parece calma, organizada, capaz. <strong>Por dentro, você está exausta de segurar tudo sozinha.</strong>",
+      "Você espera sem dizer. Você se magoa sem mostrar. Você acumula ressentimento em silêncio e guarda situações que nunca chegam a ser resolvidas. E de vez em quando — quando não aguentar mais — tudo sai de uma vez, do jeito errado, no momento errado.",
+      "O controle não é um defeito de personalidade. É uma estratégia de sobrevivência emocional. Em algum momento da sua história, <em>depender de alguém te machucou.</em> E você aprendeu que se você mesma controlasse, pelo menos não seria surpreendida pela dor.",
+      "Mas o custo disso é alto: você nunca relaxa de verdade. Você nunca pede o que precisa de forma direta. Você nunca deixa ninguém chegar perto o suficiente para te ajudar. E vai ficando cada vez mais sozinha dentro de um relacionamento que teoricamente não deveria ser solitário."
+    ],
+    impact: [
+      "Você carrega um cansaço emocional crônico que ninguém vê — porque você mesmo aprendeu a não mostrar.",
+      "O ressentimento acumulado vai criando uma distância silenciosa que os dois sentem mas ninguém consegue nomear.",
+      "Você espera ser percebida sem se expor. E quando não é percebida, confirma a crença de que não pode contar com ninguém.",
+      "<strong>O relacionamento vai esfriando por dentro — não por falta de amor, mas por excesso de distância emocional não dita.</strong>"
+    ],
+    traits: [
+      "Expectativa invisível e não dita",
+      "Silêncio que acumula e depois explode",
+      "Controle como mecanismo de segurança",
+      "Ressentimento guardado como prova",
+      "Dificuldade de pedir o que precisa",
+      "Exaustão que ninguém consegue ver"
+    ],
+    truth: [
+      "A verdade que ninguém te disse: <strong>o seu silêncio não está protegendo você. Está isolando você.</strong> E o controle não está te dando segurança — está te dando a ilusão de segurança enquanto você vai ficando cada vez mais sozinha.",
+      "Você não aprendeu que era seguro precisar de alguém. Mas isso não significa que nunca vai aprender. <em>Significa que você está operando com uma versão antiga de você mesma.</em> Uma versão que precisava desse controle para sobreviver.",
+      "Hoje você pode aprender outra forma de estar no relacionamento. Não abrindo mão de quem você é — mas expandindo o que você permite receber."
+    ],
+    cta_title: "Você não precisa carregar isso sozinha a vida toda.",
+    cta_text: "Existe uma forma de abrir espaço para ser cuidada sem perder o chão. De pedir sem implorar. De se expor sem ser destruída. E isso começa com entender de onde esse padrão veio.",
+    barColor: "#C9A96E"
+  },
+  sobrecarregada: {
+    name: "Sobrecarregada Relacional",
+    headline: "Você deu tanto que esqueceu quem você era antes de começar a dar.",
+    description: [
+      "Você carrega. Você segura. Você faz. Você tenta. Você sempre está lá — para todo mundo — menos para você mesma. E quando alguém pergunta como você está, você responde 'bem' porque aprendeu que as suas necessidades atrapalhavam.",
+      "<strong>Você perdeu a si mesma dentro desse relacionamento.</strong> Não de uma vez. Foi aos poucos. Uma pequena abdicação aqui, uma necessidade engolida ali, um desejo que ficou para depois e nunca mais voltou. E agora você olha e não sabe mais quem você é fora disso.",
+      "Você acredita, em algum lugar profundo, que precisa merecer ser amada. Que amor precisa ser ganho. Que se você parar de dar, de carregar, de tentar — será abandonada. <em>Essa crença não começou nesse relacionamento. Ela veio de muito antes.</em>",
+      "A dependência emocional não é fraqueza. É o resultado de alguém que nunca foi ensinada que podia ser suficiente como é — sem performar, sem se sacrificar, sem se apagar."
+    ],
+    impact: [
+      "Você está emocionalmente esgotada. E esconde isso porque se mostrar o esgotamento parece mais um fracasso.",
+      "Você perdeu o contato com seus próprios desejos, limites e identidade. Você já não sabe direito o que gosta, o que quer, quem é.",
+      "<strong>Você depende do estado emocional dele para saber como se sentir.</strong> Quando ele está bem, você respira. Quando ele está mal ou distante, você desmorona.",
+      "Você sustenta emocionalmente o que deveria ser sustentado pelos dois — e isso vai te consumindo de formas que você mal consegue nomear."
+    ],
+    traits: [
+      "Autoabandono progressivo",
+      "Dependência emocional do outro",
+      "Identidade perdida no relacionamento",
+      "Dificuldade de sentir seus próprios limites",
+      "Amor que exige sacrifício constante",
+      "Vazio que persiste mesmo acompanhada"
+    ],
+    truth: [
+      "A verdade que ninguém te disse: <strong>você não vai encontrar a paz que procura dando mais.</strong> Quanto mais você dá a partir de um lugar vazio, mais vazia fica. E mais ressente quem recebe.",
+      "Você não está em um relacionamento — você está carregando um relacionamento. E essa distinção muda tudo.",
+      "<em>Você merece se reencontrar.</em> Não para ser egoísta. Mas porque só uma mulher que se conhece, que se respeita, que tem identidade própria, consegue construir um relacionamento de verdade — de igual para igual. Sem implorar por amor. Sem desaparecer para ser aceita."
+    ],
+    cta_title: "Você ainda existe além desse relacionamento.",
+    cta_text: "E reaprender quem você é não é o fim do amor que você construiu. É o começo do amor que você merecia desde sempre.",
+    barColor: "#9B7BA8"
+  },
+  misto: {
+    name: "Perfil Emocional Misto",
+    headline: "Você não é confusa. Você está instável. E existe uma diferença enorme entre as duas coisas.",
+    description: [
+      "Às vezes você explode. Às vezes você some em silêncio. Às vezes você controla tudo. Às vezes você se abandona completamente. Essa alternância não é fraqueza — <strong>é o que acontece quando múltiplas feridas emocionais são ativadas ao mesmo tempo.</strong>",
+      "Você tem características de mais de um padrão porque a sua história é mais complexa. Você aprendeu estratégias diferentes de proteção em momentos diferentes — e agora elas se alternam dependendo do contexto, do nível de ameaça, do quanto você está esgotada.",
+      "<em>A instabilidade é o padrão.</em> E o padrão tem um nome, uma origem e uma lógica interna que você ainda não conseguiu enxergar completamente.",
+      "Você provavelmente já se sentiu incompreensível — até para si mesma. Não sabia dizer exatamente o que sentia, o que queria, do que precisava. Porque dependendo do dia, da semana, do momento, você é uma pessoa diferente dentro do relacionamento."
+    ],
+    impact: [
+      "A imprevisibilidade emocional cria insegurança nos dois — em você e nele. Ninguém sabe ao certo com quem vai se deparar.",
+      "Você se cobra para ser mais consistente, mas o padrão continua — porque ele não é um defeito de caráter, <strong>é uma resposta emocional que nunca foi compreendida.</strong>",
+      "O relacionamento vive numa montanha-russa emocional que cansa e desgasta — sem que nenhum dos dois consiga nomear o que está acontecendo de verdade.",
+      "Você sente que ninguém te entende completamente. Às vezes nem você mesma."
+    ],
+    traits: [
+      "Alternância entre explosão e silêncio",
+      "Instabilidade emocional situacional",
+      "Múltiplas estratégias de proteção",
+      "Dificuldade de se reconhecer em um padrão fixo",
+      "Alta sensibilidade emocional",
+      "Ciclos que se repetem de formas diferentes"
+    ],
+    truth: [
+      "A verdade que ninguém te disse: <strong>você não precisa se encaixar em uma caixa para ser compreendida.</strong> O perfil misto não é menos sério — é mais complexo.",
+      "Ele indica que existe mais de uma camada emocional a ser trabalhada. Mais de uma história que ainda está ativa dentro de você. E isso exige um olhar mais profundo e mais cuidadoso.",
+      "<em>Você não é difícil. Você é múltipla.</em> E existe uma forma de integrar essas partes — não para se tornar mais simples, mas para parar de se sabotar."
+    ],
+    cta_title: "Você merece se entender — de verdade.",
+    cta_text: "Quando você compreende o que está acontecendo emocionalmente, você para de se culpar. E começa a mudar de dentro para fora.",
+    barColor: "#6B9BB8"
+  }
+};
+
+let currentQuestion = 0;
+let answers = [];
+
+function startDiagnostic() {
+  showScreen('screen-questions');
+  showQuestion(0);
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  const el = document.getElementById(id);
+  el.classList.add('active');
+  el.style.animation = 'none';
+  el.offsetHeight;
+  el.style.animation = '';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showQuestion(idx) {
+  const q = questions[idx];
+  document.getElementById('block-label').textContent = `Bloco ${q.block} — ${q.blockName}`;
+  document.getElementById('progress-count').textContent = `${idx + 1} / ${questions.length}`;
+  document.getElementById('question-number').textContent = `PERGUNTA ${String(idx + 1).padStart(2, '0')}`;
+  document.getElementById('question-text').textContent = q.text;
+  document.getElementById('progress-fill').style.width = `${(idx / questions.length) * 100}%`;
+
+  // Reset answer buttons
+  document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
+
+  // Highlight if already answered
+  if (answers[idx] !== undefined) {
+    const val = answers[idx];
+    const btns = document.querySelectorAll('.answer-btn');
+    if (val === 2) btns[0].classList.add('selected');
+    else if (val === 1) btns[1].classList.add('selected');
+    else btns[2].classList.add('selected');
+  }
+}
+
+function answer(value) {
+  answers[currentQuestion] = value;
+
+  // Visual feedback
+  const btns = document.querySelectorAll('.answer-btn');
+  btns.forEach(b => b.classList.remove('selected'));
+  if (value === 2) btns[0].classList.add('selected');
+  else if (value === 1) btns[1].classList.add('selected');
+  else btns[2].classList.add('selected');
+
+  setTimeout(() => {
+    currentQuestion++;
+    if (currentQuestion < questions.length) {
+      showQuestion(currentQuestion);
+    } else {
+      showScreen('screen-calculating');
+      setTimeout(calculateResult, 2800);
+    }
+  }, 320);
+}
+
+function calculateResult() {
+  // Block groupings
+  // Reativa: blocks 2,3,8 → indices 12-23, 24-35, 84-95
+  // Controladora: blocks 1,4,6 → indices 0-11, 36-47, 60-71
+  // Sobrecarregada: blocks 5,7,9,10 → indices 48-59, 72-83, 96-107, 108-119
+
+  const reativaIndices = [...range(12,24), ...range(24,36), ...range(84,96)];
+  const controladoraIndices = [...range(0,12), ...range(36,48), ...range(60,72)];
+  const sobrecarregadaIndices = [...range(48,60), ...range(72,84), ...range(96,108), ...range(108,120)];
+
+  const reativaScore = sumIndices(reativaIndices);
+  const controladoraScore = sumIndices(controladoraIndices);
+  const sobrecarregadaScore = sumIndices(sobrecarregadaIndices);
+
+  const reativaPct = reativaScore / (reativaIndices.length * 2) * 100;
+  const controladoraPct = controladoraScore / (controladoraIndices.length * 2) * 100;
+  const sobrecarregadaPct = sobrecarregadaScore / (sobrecarregadaIndices.length * 2) * 100;
+
+  const scores = [
+    { key: 'reativa', pct: reativaPct, label: 'Reativa Emocional' },
+    { key: 'controladora', pct: controladoraPct, label: 'Controladora Silenciosa' },
+    { key: 'sobrecarregada', pct: sobrecarregadaPct, label: 'Sobrecarregada Relacional' }
+  ];
+
+  scores.sort((a, b) => b.pct - a.pct);
+
+  let profileKey;
+  const diff = scores[0].pct - scores[1].pct;
+  if (diff <= 12) {
+    profileKey = 'misto';
+  } else {
+    profileKey = scores[0].key;
+  }
+
+  renderResult(profileKey, scores);
+}
+
+function range(start, end) {
+  return Array.from({ length: end - start }, (_, i) => start + i);
+}
+
+function sumIndices(indices) {
+  return indices.reduce((sum, i) => sum + (answers[i] || 0), 0);
+}
+
+function renderResult(profileKey, scores) {
+  const p = profiles[profileKey];
+
+  document.getElementById('result-name').textContent = p.name;
+  document.getElementById('result-headline').textContent = p.headline;
+
+  // Score bars
+  const barsEl = document.getElementById('score-bars');
+  const barColors = { reativa: '#c4445a', controladora: '#C9A96E', sobrecarregada: '#9B7BA8' };
+  barsEl.innerHTML = scores.map(s => `
+    <div class="score-bar-item">
+      <div class="score-bar-label">
+        <span>${s.label}</span>
+        <span>${Math.round(s.pct)}%</span>
+      </div>
+      <div class="score-bar-track">
+        <div class="score-bar-fill" style="width: 0%; background: ${barColors[s.key] || '#888'}" data-width="${s.pct}"></div>
+      </div>
+    </div>
+  `).join('');
+
+  // Description
+  const descEl = document.getElementById('result-description');
+  descEl.innerHTML = p.description.map(t => `<p class="result-text">${t}</p>`).join('');
+
+  // Impact
+  const impactEl = document.getElementById('result-impact');
+  impactEl.innerHTML = p.impact.map(t => `<p class="result-text">— ${t}</p>`).join('');
+
+  // Traits
+  const traitsEl = document.getElementById('result-traits');
+  traitsEl.innerHTML = p.traits.map(t => `
+    <div class="trait-item"><div class="trait-dot"></div>${t}</div>
+  `).join('');
+
+  // Truth
+  const truthEl = document.getElementById('result-truth');
+  truthEl.innerHTML = p.truth.map(t => `<p class="result-text">${t}</p>`).join('');
+
+  // CTA
+  document.getElementById('cta-title').textContent = p.cta_title;
+  document.getElementById('cta-text').textContent = p.cta_text;
+
+  showScreen('screen-result');
+
+  // Animate bars after render
+  setTimeout(() => {
+    document.querySelectorAll('.score-bar-fill[data-width]').forEach(el => {
+      el.style.width = el.dataset.width + '%';
+    });
+  }, 400);
+}
+</script>
+</body>
+</html>
